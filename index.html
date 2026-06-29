@@ -4,12 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NeonNotes — GX Sidebar</title>
-    <meta name="description" content="Opera GX Sidebar için premium not uygulaması. Klasörler, notlar, zengin düzenleme.">
+    <meta name="description" content="Opera GX Sidebar için premium not uygulaması.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        /* ===== CSS RESET & ROOT ===== */
         *, *::before, *::after {
             margin: 0;
             padding: 0;
@@ -17,105 +16,71 @@
         }
 
         :root {
-            --bg-primary: #0a0a0f;
-            --bg-secondary: #12121a;
-            --bg-tertiary: #1a1a28;
-            --bg-card: #16162280;
-            --bg-hover: #1e1e30;
-            --bg-active: #252540;
-            --bg-input: #0e0e18;
+            --bg-primary: #0c0c12;
+            --bg-secondary: #111118;
+            --bg-tertiary: #191924;
+            --bg-hover: #1e1e2e;
+            --bg-active: #24243a;
+            --bg-input: #0e0e16;
 
-            --border-default: #2a2a3e;
+            --border: #2a2a3c;
+            --border-subtle: #1c1c2c;
             --border-focus: #7c3aed;
-            --border-subtle: #1e1e30;
 
-            --text-primary: #e8e8f0;
-            --text-secondary: #9090b0;
-            --text-muted: #606080;
-            --text-accent: #a78bfa;
+            --text-primary: #e4e4ec;
+            --text-secondary: #8888a8;
+            --text-muted: #555570;
 
-            --accent-primary: #7c3aed;
-            --accent-secondary: #06b6d4;
-            --accent-danger: #ef4444;
-            --accent-warning: #f59e0b;
-            --accent-success: #10b981;
+            --accent: #7c3aed;
+            --accent-hover: #6d28d9;
+            --accent-subtle: rgba(124, 58, 237, 0.12);
+            --accent-glow: 0 0 16px rgba(124, 58, 237, 0.25);
 
-            --neon-purple: #7c3aed;
-            --neon-cyan: #06b6d4;
-            --neon-pink: #ec4899;
-            --neon-green: #10b981;
-
-            --glow-purple: 0 0 20px rgba(124, 58, 237, 0.3);
-            --glow-cyan: 0 0 20px rgba(6, 182, 212, 0.3);
-            --glow-pink: 0 0 20px rgba(236, 72, 153, 0.3);
+            --danger: #ef4444;
+            --success: #10b981;
 
             --radius-sm: 6px;
             --radius-md: 10px;
             --radius-lg: 14px;
-            --radius-xl: 18px;
 
-            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition: 150ms ease;
 
-            --font-main: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             --font-mono: 'JetBrains Mono', monospace;
-
-            --sidebar-width: 280px;
         }
 
-        html, body {
-            height: 100%;
-            overflow: hidden;
-        }
+        html, body { height: 100%; overflow: hidden; }
 
         body {
-            font-family: var(--font-main);
+            font-family: var(--font);
             background: var(--bg-primary);
             color: var(--text-primary);
             line-height: 1.5;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* ===== SCROLLBAR ===== */
-        ::-webkit-scrollbar {
-            width: 5px;
-        }
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--border-default);
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--accent-primary);
-        }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
         /* ===== LAYOUT ===== */
-        #app {
-            display: flex;
-            height: 100vh;
-            overflow: hidden;
-        }
+        #app { display: flex; height: 100vh; }
 
         /* ===== SIDEBAR ===== */
         .sidebar {
-            width: var(--sidebar-width);
-            min-width: var(--sidebar-width);
+            width: 260px;
+            min-width: 260px;
             background: var(--bg-secondary);
-            border-right: 1px solid var(--border-default);
+            border-right: 1px solid var(--border);
             display: flex;
             flex-direction: column;
-            position: relative;
             z-index: 10;
-            transition: var(--transition-normal);
         }
 
         .sidebar-header {
             padding: 16px 14px 12px;
-            border-bottom: 1px solid var(--border-default);
-            flex-shrink: 0;
+            border-bottom: 1px solid var(--border);
         }
 
         .app-brand {
@@ -126,94 +91,93 @@
         }
 
         .app-logo {
-            width: 32px;
-            height: 32px;
-            border-radius: var(--radius-md);
-            background: linear-gradient(135deg, var(--neon-purple), var(--neon-cyan));
+            width: 30px;
+            height: 30px;
+            border-radius: var(--radius-sm);
+            background: linear-gradient(135deg, #7c3aed, #06b6d4);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 16px;
-            box-shadow: var(--glow-purple);
-            flex-shrink: 0;
+            font-size: 14px;
+            box-shadow: var(--accent-glow);
         }
 
         .app-title {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 700;
-            background: linear-gradient(135deg, var(--neon-purple), var(--neon-cyan));
+            background: linear-gradient(135deg, #7c3aed, #06b6d4);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            letter-spacing: -0.3px;
         }
 
         .app-subtitle {
-            font-size: 10px;
+            font-size: 9px;
             color: var(--text-muted);
-            font-weight: 500;
+            font-weight: 600;
             letter-spacing: 1.5px;
             text-transform: uppercase;
         }
 
         /* Search */
-        .search-box {
-            position: relative;
-        }
+        .search-box { position: relative; }
 
         .search-box input {
             width: 100%;
-            padding: 9px 12px 9px 34px;
+            padding: 8px 10px 8px 32px;
             background: var(--bg-input);
-            border: 1px solid var(--border-default);
+            border: 1px solid var(--border);
             border-radius: var(--radius-md);
             color: var(--text-primary);
-            font-size: 12.5px;
-            font-family: var(--font-main);
+            font-size: 12px;
+            font-family: var(--font);
             outline: none;
-            transition: var(--transition-fast);
+            transition: var(--transition);
         }
 
-        .search-box input::placeholder {
-            color: var(--text-muted);
-        }
-
+        .search-box input::placeholder { color: var(--text-muted); }
         .search-box input:focus {
-            border-color: var(--accent-primary);
-            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-subtle);
         }
 
-        .search-box .search-icon {
+        .search-icon {
             position: absolute;
             left: 10px;
             top: 50%;
             transform: translateY(-50%);
             color: var(--text-muted);
-            font-size: 14px;
+            font-size: 13px;
             pointer-events: none;
         }
 
-        /* Sidebar Actions */
+        /* Neon line */
+        .neon-line {
+            height: 1px;
+            background: linear-gradient(90deg, #7c3aed, #06b6d4, #7c3aed);
+            opacity: 0.5;
+        }
+
+        /* Sidebar actions */
         .sidebar-actions {
             display: flex;
             gap: 6px;
             padding: 10px 14px;
             border-bottom: 1px solid var(--border-subtle);
-            flex-shrink: 0;
         }
 
         .action-btn {
             flex: 1;
             padding: 7px 0;
-            border: 1px solid var(--border-default);
+            border: 1px solid var(--border);
             border-radius: var(--radius-sm);
             background: var(--bg-tertiary);
             color: var(--text-secondary);
             font-size: 11px;
-            font-family: var(--font-main);
+            font-family: var(--font);
             font-weight: 500;
             cursor: pointer;
-            transition: var(--transition-fast);
+            transition: var(--transition);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -221,84 +185,58 @@
         }
 
         .action-btn:hover {
-            background: var(--accent-primary);
+            background: var(--accent);
             color: white;
-            border-color: var(--accent-primary);
-            box-shadow: var(--glow-purple);
-        }
-
-        .action-btn.danger:hover {
-            background: var(--accent-danger);
-            border-color: var(--accent-danger);
-            box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+            border-color: var(--accent);
         }
 
         /* Folder list */
         .folder-list {
             flex: 1;
             overflow-y: auto;
-            padding: 8px 0;
+            padding: 6px 0;
         }
 
-        .folder-item {
-            user-select: none;
+        .section-label {
+            font-size: 9px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            font-weight: 600;
+            padding: 10px 14px 4px;
         }
 
         .folder-header {
             display: flex;
             align-items: center;
-            padding: 8px 14px;
+            padding: 7px 14px;
             cursor: pointer;
-            transition: var(--transition-fast);
-            gap: 8px;
-            position: relative;
+            transition: var(--transition);
+            gap: 7px;
         }
 
-        .folder-header:hover {
-            background: var(--bg-hover);
-        }
-
-        .folder-header.active {
-            background: var(--bg-active);
-        }
+        .folder-header:hover { background: var(--bg-hover); }
+        .folder-header.active { background: var(--bg-active); }
 
         .folder-chevron {
-            font-size: 10px;
+            font-size: 9px;
             color: var(--text-muted);
-            transition: transform var(--transition-fast);
-            width: 14px;
+            transition: transform var(--transition);
+            width: 12px;
             text-align: center;
-            flex-shrink: 0;
         }
 
-        .folder-chevron.open {
-            transform: rotate(90deg);
-        }
+        .folder-chevron.open { transform: rotate(90deg); }
 
-        .folder-icon {
-            font-size: 14px;
-            flex-shrink: 0;
-        }
+        .folder-icon { font-size: 13px; }
 
         .folder-name {
-            font-size: 13px;
+            font-size: 12.5px;
             font-weight: 500;
             flex: 1;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-        }
-
-        .folder-name-input {
-            flex: 1;
-            background: var(--bg-input);
-            border: 1px solid var(--accent-primary);
-            border-radius: var(--radius-sm);
-            color: var(--text-primary);
-            font-size: 13px;
-            font-family: var(--font-main);
-            padding: 2px 6px;
-            outline: none;
         }
 
         .folder-count {
@@ -308,69 +246,49 @@
             padding: 1px 6px;
             border-radius: 10px;
             font-weight: 500;
-            flex-shrink: 0;
         }
 
         .folder-star {
-            font-size: 12px;
+            font-size: 11px;
             cursor: pointer;
             color: var(--text-muted);
-            transition: var(--transition-fast);
-            flex-shrink: 0;
+            transition: var(--transition);
             opacity: 0;
         }
 
-        .folder-header:hover .folder-star,
-        .folder-star.starred {
-            opacity: 1;
-        }
-
-        .folder-star.starred {
-            color: var(--accent-warning);
-            text-shadow: 0 0 8px rgba(245, 158, 11, 0.5);
-        }
+        .folder-header:hover .folder-star, .folder-star.starred { opacity: 1; }
+        .folder-star.starred { color: #f59e0b; text-shadow: 0 0 6px rgba(245,158,11,0.4); }
 
         .folder-menu-btn {
-            font-size: 14px;
+            font-size: 13px;
             color: var(--text-muted);
             cursor: pointer;
             opacity: 0;
-            transition: var(--transition-fast);
+            transition: var(--transition);
             padding: 0 2px;
-            flex-shrink: 0;
         }
 
-        .folder-header:hover .folder-menu-btn {
-            opacity: 1;
-        }
+        .folder-header:hover .folder-menu-btn { opacity: 1; }
+        .folder-menu-btn:hover { color: var(--text-primary); }
 
-        .folder-menu-btn:hover {
-            color: var(--text-primary);
-        }
-
-        /* Note items inside folder */
+        /* Notes */
         .note-list {
             overflow: hidden;
-            transition: max-height var(--transition-slow);
+            transition: max-height 300ms ease;
         }
-
-        .note-list.collapsed {
-            max-height: 0 !important;
-        }
+        .note-list.collapsed { max-height: 0 !important; }
 
         .note-item {
             display: flex;
             align-items: center;
-            padding: 7px 14px 7px 42px;
+            padding: 6px 14px 6px 38px;
             cursor: pointer;
-            transition: var(--transition-fast);
+            transition: var(--transition);
             gap: 8px;
             position: relative;
         }
 
-        .note-item:hover {
-            background: var(--bg-hover);
-        }
+        .note-item:hover { background: var(--bg-hover); }
 
         .note-item.active {
             background: var(--bg-active);
@@ -382,26 +300,20 @@
             left: 0;
             top: 4px;
             bottom: 4px;
-            width: 3px;
-            background: var(--accent-primary);
-            border-radius: 0 3px 3px 0;
-            box-shadow: var(--glow-purple);
+            width: 2px;
+            background: var(--accent);
+            border-radius: 0 2px 2px 0;
         }
 
-        .note-color-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            flex-shrink: 0;
+        .note-icon {
+            font-size: 11px;
+            color: var(--text-muted);
         }
 
-        .note-info {
-            flex: 1;
-            min-width: 0;
-        }
+        .note-info { flex: 1; min-width: 0; }
 
         .note-title {
-            font-size: 12.5px;
+            font-size: 12px;
             font-weight: 500;
             white-space: nowrap;
             overflow: hidden;
@@ -414,69 +326,74 @@
         }
 
         .note-delete-btn {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--text-muted);
             cursor: pointer;
             opacity: 0;
-            transition: var(--transition-fast);
+            transition: var(--transition);
             padding: 2px;
-            flex-shrink: 0;
         }
 
-        .note-item:hover .note-delete-btn {
-            opacity: 1;
-        }
-
-        .note-delete-btn:hover {
-            color: var(--accent-danger);
-        }
+        .note-item:hover .note-delete-btn { opacity: 1; }
+        .note-delete-btn:hover { color: var(--danger); }
 
         .add-note-btn {
             display: flex;
             align-items: center;
-            gap: 6px;
-            padding: 6px 14px 6px 42px;
+            gap: 5px;
+            padding: 5px 14px 5px 38px;
             cursor: pointer;
-            transition: var(--transition-fast);
+            transition: var(--transition);
             color: var(--text-muted);
-            font-size: 11.5px;
+            font-size: 11px;
         }
 
         .add-note-btn:hover {
-            color: var(--accent-primary);
+            color: var(--accent);
             background: var(--bg-hover);
         }
 
-        /* Sidebar stats */
+        /* Footer */
         .sidebar-footer {
             padding: 10px 14px;
-            border-top: 1px solid var(--border-default);
-            flex-shrink: 0;
+            border-top: 1px solid var(--border);
         }
 
-        .sidebar-stats {
+        .sidebar-stats { display: flex; justify-content: space-around; }
+
+        .stat-item { text-align: center; }
+        .stat-value { font-size: 15px; font-weight: 700; color: var(--accent); }
+        .stat-label { font-size: 8px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+
+        /* Save indicator */
+        .save-indicator {
             display: flex;
-            justify-content: space-around;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-value {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--accent-primary);
-        }
-
-        .stat-label {
-            font-size: 9px;
+            align-items: center;
+            gap: 5px;
+            font-size: 10px;
             color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            padding: 4px 14px;
+            border-top: 1px solid var(--border-subtle);
+            transition: var(--transition);
         }
 
-        /* ===== EDITOR PANEL ===== */
+        .save-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--success);
+            transition: var(--transition);
+        }
+
+        .save-dot.saving { background: #f59e0b; animation: pulse 0.6s ease infinite; }
+        .save-dot.unsaved { background: var(--danger); }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        /* ===== EDITOR ===== */
         .editor-panel {
             flex: 1;
             display: flex;
@@ -485,50 +402,47 @@
             min-width: 0;
         }
 
-        /* Empty state */
         .empty-state {
             flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 16px;
+            gap: 14px;
             padding: 40px;
         }
 
         .empty-icon {
-            font-size: 56px;
-            opacity: 0.3;
+            font-size: 48px;
+            opacity: 0.25;
             animation: float 3s ease-in-out infinite;
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
         }
 
-        .empty-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--text-secondary);
-        }
+        .empty-title { font-size: 16px; font-weight: 600; color: var(--text-secondary); }
+        .empty-desc { font-size: 12px; color: var(--text-muted); text-align: center; max-width: 220px; line-height: 1.6; }
 
-        .empty-desc {
-            font-size: 13px;
+        .shortcut-hint {
+            font-size: 10px;
             color: var(--text-muted);
-            text-align: center;
-            max-width: 240px;
-            line-height: 1.6;
+            background: var(--bg-input);
+            padding: 1px 5px;
+            border-radius: 3px;
+            font-family: var(--font-mono);
+            border: 1px solid var(--border);
         }
 
         /* Editor header */
         .editor-header {
             padding: 12px 20px;
-            border-bottom: 1px solid var(--border-default);
+            border-bottom: 1px solid var(--border);
             display: flex;
             align-items: center;
             gap: 12px;
-            flex-shrink: 0;
             background: var(--bg-secondary);
         }
 
@@ -539,134 +453,84 @@
             border: none;
             color: var(--text-secondary);
             cursor: pointer;
-            font-size: 16px;
+            font-size: 14px;
             border-radius: var(--radius-sm);
-            transition: var(--transition-fast);
         }
 
-        .editor-back-btn:hover {
-            background: var(--bg-hover);
-            color: var(--text-primary);
-        }
+        .editor-back-btn:hover { background: var(--bg-hover); color: var(--text-primary); }
 
         .editor-title-input {
             flex: 1;
             background: none;
             border: none;
             color: var(--text-primary);
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 600;
-            font-family: var(--font-main);
+            font-family: var(--font);
             outline: none;
             padding: 4px 0;
         }
 
-        .editor-title-input::placeholder {
-            color: var(--text-muted);
-        }
+        .editor-title-input::placeholder { color: var(--text-muted); }
 
-        .editor-meta {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+        .editor-meta { display: flex; align-items: center; gap: 10px; }
 
         .editor-folder-badge {
-            font-size: 11px;
-            color: var(--text-accent);
-            background: rgba(124, 58, 237, 0.12);
+            font-size: 10px;
+            color: #a78bfa;
+            background: var(--accent-subtle);
             padding: 3px 10px;
             border-radius: 20px;
             font-weight: 500;
             white-space: nowrap;
         }
 
-        .editor-date {
-            font-size: 11px;
-            color: var(--text-muted);
-            white-space: nowrap;
-        }
-
-        /* Color picker */
-        .color-picker-row {
-            padding: 8px 20px;
-            border-bottom: 1px solid var(--border-subtle);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-shrink: 0;
-            background: var(--bg-secondary);
-        }
-
-        .color-label {
-            font-size: 11px;
-            color: var(--text-muted);
-            margin-right: 4px;
-        }
-
-        .color-option {
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            cursor: pointer;
-            border: 2px solid transparent;
-            transition: var(--transition-fast);
-        }
-
-        .color-option:hover {
-            transform: scale(1.2);
-        }
-
-        .color-option.active {
-            border-color: white;
-            box-shadow: 0 0 8px currentColor;
-        }
+        .editor-date { font-size: 10px; color: var(--text-muted); white-space: nowrap; }
 
         /* Toolbar */
         .editor-toolbar {
-            padding: 8px 20px;
+            padding: 6px 20px;
             border-bottom: 1px solid var(--border-subtle);
             display: flex;
             align-items: center;
-            gap: 4px;
-            flex-shrink: 0;
+            gap: 2px;
             flex-wrap: wrap;
             background: var(--bg-secondary);
         }
 
         .toolbar-btn {
-            padding: 5px 8px;
+            padding: 4px 7px;
             background: none;
             border: 1px solid transparent;
             color: var(--text-secondary);
             cursor: pointer;
-            font-size: 13px;
+            font-size: 12px;
             border-radius: var(--radius-sm);
-            transition: var(--transition-fast);
-            font-family: var(--font-main);
+            transition: var(--transition);
+            font-family: var(--font);
             display: flex;
             align-items: center;
             justify-content: center;
-            min-width: 28px;
-            height: 28px;
+            min-width: 26px;
+            height: 26px;
         }
 
         .toolbar-btn:hover {
             background: var(--bg-hover);
             color: var(--text-primary);
-            border-color: var(--border-default);
+            border-color: var(--border);
         }
 
         .toolbar-btn.active {
-            background: var(--accent-primary);
+            background: var(--accent);
             color: white;
-            border-color: var(--accent-primary);
+            border-color: var(--accent);
         }
 
-        .toolbar-separator {
+        .toolbar-sep {
             width: 1px;
-            height: 20px;
-            background: var(--border-default);
+            height: 18px;
+            background: var(--border);
             margin: 0 4px;
         }
 
@@ -677,32 +541,13 @@
             padding: 20px;
         }
 
-        .editor-textarea {
-            width: 100%;
-            height: 100%;
-            min-height: 300px;
-            background: none;
-            border: none;
-            color: var(--text-primary);
-            font-size: 14px;
-            font-family: var(--font-main);
-            line-height: 1.8;
-            outline: none;
-            resize: none;
-        }
-
-        .editor-textarea::placeholder {
-            color: var(--text-muted);
-        }
-
-        /* Rich editor */
         .rich-editor {
             width: 100%;
             min-height: 300px;
             outline: none;
             color: var(--text-primary);
-            font-size: 14px;
-            font-family: var(--font-main);
+            font-size: 13.5px;
+            font-family: var(--font);
             line-height: 1.8;
             word-wrap: break-word;
         }
@@ -712,395 +557,222 @@
             color: var(--text-muted);
         }
 
-        .rich-editor h1, .rich-editor h2, .rich-editor h3 {
-            margin: 0.5em 0 0.3em;
-            line-height: 1.3;
-        }
-
-        .rich-editor ul, .rich-editor ol {
-            padding-left: 24px;
-            margin: 0.3em 0;
-        }
-
+        .rich-editor h1, .rich-editor h2, .rich-editor h3 { margin: 0.4em 0 0.2em; line-height: 1.3; }
+        .rich-editor ul, .rich-editor ol { padding-left: 22px; margin: 0.3em 0; }
         .rich-editor blockquote {
-            border-left: 3px solid var(--accent-primary);
+            border-left: 3px solid var(--accent);
             padding-left: 12px;
             margin: 0.5em 0;
             color: var(--text-secondary);
             font-style: italic;
         }
-
         .rich-editor code {
             background: var(--bg-tertiary);
             padding: 2px 6px;
             border-radius: 4px;
             font-family: var(--font-mono);
-            font-size: 13px;
+            font-size: 12.5px;
         }
-
-        .rich-editor a {
-            color: var(--accent-secondary);
-            text-decoration: underline;
-        }
+        .rich-editor a { color: #06b6d4; text-decoration: underline; }
 
         /* Editor footer */
         .editor-footer {
-            padding: 10px 20px;
-            border-top: 1px solid var(--border-default);
+            padding: 8px 20px;
+            border-top: 1px solid var(--border);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            flex-shrink: 0;
             background: var(--bg-secondary);
         }
 
-        .char-count {
-            font-size: 11px;
-            color: var(--text-muted);
-            font-family: var(--font-mono);
-        }
+        .char-count { font-size: 10px; color: var(--text-muted); font-family: var(--font-mono); }
 
-        .editor-actions {
-            display: flex;
-            gap: 8px;
-        }
+        .editor-actions { display: flex; gap: 8px; }
 
         .btn {
-            padding: 7px 18px;
-            border: 1px solid var(--border-default);
+            padding: 6px 16px;
+            border: 1px solid var(--border);
             border-radius: var(--radius-md);
-            font-size: 12px;
-            font-family: var(--font-main);
+            font-size: 11px;
+            font-family: var(--font);
             font-weight: 500;
             cursor: pointer;
-            transition: var(--transition-fast);
+            transition: var(--transition);
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
         }
 
         .btn-primary {
-            background: var(--accent-primary);
+            background: var(--accent);
             color: white;
-            border-color: var(--accent-primary);
+            border-color: var(--accent);
         }
-
-        .btn-primary:hover {
-            background: #6d28d9;
-            box-shadow: var(--glow-purple);
-        }
+        .btn-primary:hover { background: var(--accent-hover); box-shadow: var(--accent-glow); }
 
         .btn-danger {
             background: transparent;
-            color: var(--accent-danger);
-            border-color: var(--accent-danger);
+            color: var(--danger);
+            border-color: rgba(239,68,68,0.3);
         }
+        .btn-danger:hover { background: var(--danger); color: white; }
 
-        .btn-danger:hover {
-            background: var(--accent-danger);
-            color: white;
-            box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
-        }
-
-        .btn-ghost {
-            background: transparent;
-            color: var(--text-secondary);
-        }
-
-        .btn-ghost:hover {
-            background: var(--bg-hover);
-            color: var(--text-primary);
-        }
+        .btn-ghost { background: transparent; color: var(--text-secondary); }
+        .btn-ghost:hover { background: var(--bg-hover); color: var(--text-primary); }
 
         /* ===== CONTEXT MENU ===== */
         .context-menu {
             position: fixed;
             background: var(--bg-tertiary);
-            border: 1px solid var(--border-default);
+            border: 1px solid var(--border);
             border-radius: var(--radius-md);
             padding: 4px;
-            min-width: 160px;
+            min-width: 150px;
             z-index: 1000;
             box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-            animation: menuIn 150ms ease-out;
-            backdrop-filter: blur(20px);
+            animation: menuIn 120ms ease-out;
         }
 
         @keyframes menuIn {
-            from { opacity: 0; transform: scale(0.95) translateY(-4px); }
+            from { opacity: 0; transform: scale(0.96) translateY(-4px); }
             to { opacity: 1; transform: scale(1) translateY(0); }
         }
 
-        .context-menu-item {
+        .ctx-item {
             display: flex;
             align-items: center;
             gap: 8px;
-            padding: 7px 12px;
+            padding: 6px 12px;
             cursor: pointer;
             border-radius: var(--radius-sm);
-            font-size: 12.5px;
+            font-size: 12px;
             color: var(--text-secondary);
-            transition: var(--transition-fast);
+            transition: var(--transition);
         }
 
-        .context-menu-item:hover {
-            background: var(--accent-primary);
-            color: white;
-        }
-
-        .context-menu-item.danger:hover {
-            background: var(--accent-danger);
-        }
-
-        .context-menu-divider {
-            height: 1px;
-            background: var(--border-default);
-            margin: 4px 0;
-        }
+        .ctx-item:hover { background: var(--accent); color: white; }
+        .ctx-item.danger:hover { background: var(--danger); }
+        .ctx-divider { height: 1px; background: var(--border); margin: 3px 0; }
 
         /* ===== MODAL ===== */
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0,0,0,0.6);
             backdrop-filter: blur(4px);
             z-index: 2000;
             display: flex;
             align-items: center;
             justify-content: center;
-            animation: fadeIn 200ms ease;
+            animation: fadeIn 150ms ease;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .modal {
             background: var(--bg-secondary);
-            border: 1px solid var(--border-default);
+            border: 1px solid var(--border);
             border-radius: var(--radius-lg);
-            padding: 24px;
-            min-width: 300px;
+            padding: 22px;
+            min-width: 280px;
             max-width: 90%;
             box-shadow: 0 16px 64px rgba(0,0,0,0.5);
-            animation: slideUp 250ms ease-out;
+            animation: slideUp 200ms ease-out;
         }
 
         @keyframes slideUp {
-            from { transform: translateY(20px); opacity: 0; }
+            from { transform: translateY(16px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
         }
 
-        .modal-title {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 16px;
-        }
+        .modal-title { font-size: 15px; font-weight: 600; margin-bottom: 14px; }
 
         .modal-input {
             width: 100%;
-            padding: 10px 14px;
+            padding: 9px 12px;
             background: var(--bg-input);
-            border: 1px solid var(--border-default);
+            border: 1px solid var(--border);
             border-radius: var(--radius-md);
             color: var(--text-primary);
-            font-size: 14px;
-            font-family: var(--font-main);
+            font-size: 13px;
+            font-family: var(--font);
             outline: none;
-            margin-bottom: 8px;
-            transition: var(--transition-fast);
+            margin-bottom: 6px;
+            transition: var(--transition);
         }
 
-        .modal-input:focus {
-            border-color: var(--accent-primary);
-            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
-        }
+        .modal-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-subtle); }
 
-        .modal-icon-picker {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin: 12px 0;
-        }
+        .modal-icon-picker { display: flex; gap: 6px; flex-wrap: wrap; margin: 10px 0; }
 
         .icon-option {
-            width: 36px;
-            height: 36px;
+            width: 34px;
+            height: 34px;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: var(--radius-sm);
-            border: 1px solid var(--border-default);
+            border: 1px solid var(--border);
             background: var(--bg-tertiary);
             cursor: pointer;
-            font-size: 16px;
-            transition: var(--transition-fast);
+            font-size: 15px;
+            transition: var(--transition);
         }
 
-        .icon-option:hover {
-            border-color: var(--accent-primary);
-            background: var(--bg-active);
-        }
+        .icon-option:hover { border-color: var(--accent); }
+        .icon-option.active { border-color: var(--accent); background: var(--accent-subtle); box-shadow: var(--accent-glow); }
 
-        .icon-option.active {
-            border-color: var(--accent-primary);
-            background: rgba(124, 58, 237, 0.2);
-            box-shadow: var(--glow-purple);
-        }
-
-        .modal-actions {
-            display: flex;
-            justify-content: flex-end;
-            gap: 8px;
-            margin-top: 20px;
-        }
+        .modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 18px; }
 
         /* ===== TOAST ===== */
         .toast-container {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
+            bottom: 16px;
+            right: 16px;
             z-index: 3000;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
         }
 
         .toast {
-            padding: 10px 18px;
+            padding: 8px 16px;
             border-radius: var(--radius-md);
-            font-size: 12.5px;
+            font-size: 12px;
             font-weight: 500;
             color: white;
-            animation: toastIn 300ms ease-out, toastOut 300ms ease-in 2700ms forwards;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            animation: toastIn 250ms ease-out, toastOut 250ms ease-in 2500ms forwards;
+            box-shadow: 0 6px 24px rgba(0,0,0,0.3);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
-        .toast.success { background: var(--accent-success); }
-        .toast.error { background: var(--accent-danger); }
-        .toast.info { background: var(--accent-primary); }
+        .toast.success { background: var(--success); }
+        .toast.error { background: var(--danger); }
+        .toast.info { background: var(--accent); }
 
-        @keyframes toastIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
+        @keyframes toastIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes toastOut { from { opacity: 1; } to { opacity: 0; transform: translateY(8px); } }
 
-        @keyframes toastOut {
-            from { opacity: 1; }
-            to { opacity: 0; transform: translateY(10px); }
-        }
-
-        /* ===== RESPONSIVE (Narrow sidebar mode) ===== */
+        /* ===== RESPONSIVE ===== */
         @media (max-width: 500px) {
             .sidebar {
                 position: absolute;
-                left: 0;
-                top: 0;
-                bottom: 0;
+                left: 0; top: 0; bottom: 0;
                 width: 100%;
                 min-width: unset;
                 z-index: 100;
-                transition: transform var(--transition-normal);
+                transition: transform 250ms ease;
             }
-
-            .sidebar.hidden {
-                transform: translateX(-100%);
-            }
-
-            .editor-back-btn {
-                display: flex;
-            }
-
-            .editor-panel {
-                width: 100%;
-            }
-        }
-
-        /* ===== ANIMATIONS ===== */
-        .fade-in {
-            animation: fadeIn 200ms ease;
-        }
-
-        .slide-in-left {
-            animation: slideInLeft 250ms ease-out;
-        }
-
-        @keyframes slideInLeft {
-            from { transform: translateX(-20px); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-
-        /* Neon line decoration */
-        .neon-line {
-            height: 2px;
-            background: linear-gradient(90deg, var(--neon-purple), var(--neon-cyan), var(--neon-pink));
-            margin: 0;
-            opacity: 0.6;
-        }
-
-        /* Drag indicator */
-        .drag-over {
-            border: 2px dashed var(--accent-primary) !important;
-            background: rgba(124, 58, 237, 0.05) !important;
-        }
-
-        /* Pinned section */
-        .section-label {
-            font-size: 10px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1.2px;
-            font-weight: 600;
-            padding: 12px 14px 4px;
-        }
-
-        /* Checkbox in notes */
-        .note-checkbox {
-            appearance: none;
-            width: 14px;
-            height: 14px;
-            border: 1.5px solid var(--border-default);
-            border-radius: 3px;
-            cursor: pointer;
-            position: relative;
-            flex-shrink: 0;
-            transition: var(--transition-fast);
-        }
-
-        .note-checkbox:checked {
-            background: var(--accent-primary);
-            border-color: var(--accent-primary);
-        }
-
-        .note-checkbox:checked::after {
-            content: '✓';
-            position: absolute;
-            color: white;
-            font-size: 10px;
-            top: -1px;
-            left: 1.5px;
-        }
-
-        /* Keyboard shortcut hints */
-        .shortcut-hint {
-            font-size: 10px;
-            color: var(--text-muted);
-            background: var(--bg-input);
-            padding: 1px 5px;
-            border-radius: 3px;
-            font-family: var(--font-mono);
-            border: 1px solid var(--border-default);
+            .sidebar.hidden { transform: translateX(-100%); }
+            .editor-back-btn { display: flex; }
         }
     </style>
 </head>
 <body>
 
 <div id="app">
-    <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <div class="app-brand">
@@ -1118,16 +790,15 @@
         <div class="neon-line"></div>
 
         <div class="sidebar-actions">
-            <button class="action-btn" id="newFolderBtn" title="Yeni Klasör">
-                <span>📁</span> Klasör
-            </button>
-            <button class="action-btn" id="newQuickNoteBtn" title="Hızlı Not">
-                <span>⚡</span> Hızlı Not
-            </button>
+            <button class="action-btn" id="newFolderBtn">📁 Klasör</button>
+            <button class="action-btn" id="newQuickNoteBtn">⚡ Hızlı Not</button>
         </div>
 
-        <div class="folder-list" id="folderList">
-            <!-- Folders rendered here -->
+        <div class="folder-list" id="folderList"></div>
+
+        <div class="save-indicator" id="saveIndicator">
+            <span class="save-dot" id="saveDot"></span>
+            <span id="saveText">Kaydedildi</span>
         </div>
 
         <div class="sidebar-footer">
@@ -1148,23 +819,20 @@
         </div>
     </aside>
 
-    <!-- Editor Panel -->
     <main class="editor-panel" id="editorPanel">
-        <!-- Empty State -->
         <div class="empty-state" id="emptyState">
             <div class="empty-icon">✨</div>
             <div class="empty-title">Not Seçin veya Oluşturun</div>
             <div class="empty-desc">Bir not seçerek düzenlemeye başlayın veya yeni bir not oluşturun.</div>
-            <div style="display:flex; gap:8px; margin-top:8px;">
+            <div style="display:flex; gap:8px; margin-top:6px;">
                 <span class="shortcut-hint">Ctrl+N</span>
                 <span style="font-size:11px; color:var(--text-muted)">Hızlı not</span>
             </div>
         </div>
 
-        <!-- Editor (hidden by default) -->
         <div id="editorView" style="display:none; flex-direction:column; flex:1;">
             <div class="editor-header">
-                <button class="editor-back-btn" id="editorBackBtn" title="Geri">◀</button>
+                <button class="editor-back-btn" id="editorBackBtn">◀</button>
                 <input type="text" class="editor-title-input" id="noteTitleInput" placeholder="Not başlığı..." maxlength="100">
                 <div class="editor-meta">
                     <span class="editor-folder-badge" id="editorFolderBadge"></span>
@@ -1172,31 +840,19 @@
                 </div>
             </div>
 
-            <div class="color-picker-row">
-                <span class="color-label">Renk:</span>
-                <div class="color-option active" data-color="#7c3aed" style="background:#7c3aed" title="Mor"></div>
-                <div class="color-option" data-color="#06b6d4" style="background:#06b6d4" title="Cyan"></div>
-                <div class="color-option" data-color="#10b981" style="background:#10b981" title="Yeşil"></div>
-                <div class="color-option" data-color="#f59e0b" style="background:#f59e0b" title="Sarı"></div>
-                <div class="color-option" data-color="#ef4444" style="background:#ef4444" title="Kırmızı"></div>
-                <div class="color-option" data-color="#ec4899" style="background:#ec4899" title="Pembe"></div>
-                <div class="color-option" data-color="#8b5cf6" style="background:#8b5cf6" title="Açık Mor"></div>
-                <div class="color-option" data-color="#64748b" style="background:#64748b" title="Gri"></div>
-            </div>
-
             <div class="editor-toolbar" id="editorToolbar">
                 <button class="toolbar-btn" data-cmd="bold" title="Kalın (Ctrl+B)"><b>B</b></button>
                 <button class="toolbar-btn" data-cmd="italic" title="İtalik (Ctrl+I)"><i>I</i></button>
                 <button class="toolbar-btn" data-cmd="underline" title="Altı Çizili (Ctrl+U)"><u>U</u></button>
                 <button class="toolbar-btn" data-cmd="strikeThrough" title="Üstü Çizili"><s>S</s></button>
-                <div class="toolbar-separator"></div>
+                <div class="toolbar-sep"></div>
                 <button class="toolbar-btn" data-cmd="insertUnorderedList" title="Madde İşareti">•</button>
                 <button class="toolbar-btn" data-cmd="insertOrderedList" title="Numaralı Liste">1.</button>
-                <div class="toolbar-separator"></div>
+                <div class="toolbar-sep"></div>
                 <button class="toolbar-btn" data-cmd-block="h2" title="Başlık">H</button>
                 <button class="toolbar-btn" data-cmd-block="blockquote" title="Alıntı">❝</button>
                 <button class="toolbar-btn" data-cmd="insertHorizontalRule" title="Çizgi">―</button>
-                <div class="toolbar-separator"></div>
+                <div class="toolbar-sep"></div>
                 <button class="toolbar-btn" id="insertLinkBtn" title="Link Ekle">🔗</button>
                 <button class="toolbar-btn" id="insertCodeBtn" title="Kod">{ }</button>
             </div>
@@ -1216,675 +872,413 @@
     </main>
 </div>
 
-<!-- Toast container -->
 <div class="toast-container" id="toastContainer"></div>
 
 <script>
-// ===== DATA LAYER =====
+// ===== DATA =====
 const STORAGE_KEY = 'neonnotes_data';
+let appData = { folders: [], activeNoteId: null, activeFolderId: null, expandedFolders: {} };
+let currentEditingNote = null;
+let saveDebounceTimer = null;
+let isDirty = false;
 
-let appData = {
-    folders: [],
-    activeNoteId: null,
-    activeFolderId: null,
-    expandedFolders: {}
-};
-
-function generateId() {
-    return Date.now().toString(36) + Math.random().toString(36).substr(2, 8);
-}
+function uid() { return Date.now().toString(36) + Math.random().toString(36).substr(2, 8); }
 
 function loadData() {
     try {
         const raw = localStorage.getItem(STORAGE_KEY);
-        if (raw) {
-            const parsed = JSON.parse(raw);
-            appData = { ...appData, ...parsed };
-        }
-        if (appData.folders.length === 0) {
-            createDefaultData();
-        }
-    } catch (e) {
-        createDefaultData();
-    }
+        if (raw) appData = { ...appData, ...JSON.parse(raw) };
+        if (!appData.folders.length) createDefaults();
+    } catch { createDefaults(); }
 }
 
 function saveData() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
+    try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
+        isDirty = false;
+        updateSaveIndicator('saved');
+    } catch (e) {
+        updateSaveIndicator('error');
+        console.error('Save failed:', e);
+    }
     updateStats();
 }
 
-function createDefaultData() {
-    const folderId1 = generateId();
-    const folderId2 = generateId();
-    const noteId1 = generateId();
-    const noteId2 = generateId();
-    const noteId3 = generateId();
+// Instant save with micro-debounce (300ms) to avoid hammering storage on fast typing
+function instantSave() {
+    isDirty = true;
+    updateSaveIndicator('saving');
+    clearTimeout(saveDebounceTimer);
+    saveDebounceTimer = setTimeout(() => {
+        if (currentEditingNote) {
+            const result = getNote(currentEditingNote.note.id);
+            if (result) {
+                result.note.title = document.getElementById('noteTitleInput').value.trim() || 'Başlıksız Not';
+                result.note.content = document.getElementById('richEditor').innerHTML;
+                result.note.updatedAt = Date.now();
+                currentEditingNote = result;
+            }
+        }
+        saveData();
+        renderFolders();
+    }, 300);
+}
 
+// Save indicator
+function updateSaveIndicator(state) {
+    const dot = document.getElementById('saveDot');
+    const text = document.getElementById('saveText');
+    dot.className = 'save-dot';
+    if (state === 'saving') {
+        dot.classList.add('saving');
+        text.textContent = 'Kaydediliyor...';
+    } else if (state === 'saved') {
+        text.textContent = 'Kaydedildi';
+    } else if (state === 'error') {
+        dot.classList.add('unsaved');
+        text.textContent = 'Kayıt hatası!';
+    } else if (state === 'unsaved') {
+        dot.classList.add('unsaved');
+        text.textContent = 'Kaydedilmedi';
+    }
+}
+
+// Save before page unload
+window.addEventListener('beforeunload', () => {
+    if (currentEditingNote) {
+        const result = getNote(currentEditingNote.note.id);
+        if (result) {
+            result.note.title = document.getElementById('noteTitleInput').value.trim() || 'Başlıksız Not';
+            result.note.content = document.getElementById('richEditor').innerHTML;
+            result.note.updatedAt = Date.now();
+        }
+    }
+    saveData();
+});
+
+// Also save on visibility change (tab switch, minimize)
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden && currentEditingNote) {
+        const result = getNote(currentEditingNote.note.id);
+        if (result) {
+            result.note.title = document.getElementById('noteTitleInput').value.trim() || 'Başlıksız Not';
+            result.note.content = document.getElementById('richEditor').innerHTML;
+            result.note.updatedAt = Date.now();
+        }
+        saveData();
+    }
+});
+
+function createDefaults() {
+    const f1 = uid(), f2 = uid();
     appData.folders = [
         {
-            id: folderId1,
-            name: 'Kişisel Notlar',
-            icon: '📋',
-            starred: true,
-            createdAt: Date.now(),
+            id: f1, name: 'Kişisel Notlar', icon: '📋', starred: true, createdAt: Date.now(),
             notes: [
                 {
-                    id: noteId1,
-                    title: 'NeonNotes\'a Hoş Geldiniz!',
-                    content: '<h2>🎉 NeonNotes\'a Hoş Geldiniz!</h2><p>Bu uygulama ile notlarınızı kolayca yönetebilirsiniz.</p><p><br></p><p><b>Özellikler:</b></p><ul><li>📁 Klasörlerle organize edin</li><li>🎨 Renk kodları ile kategorize edin</li><li>⭐ Favori klasörleri sabitleyin</li><li>🔍 Notlarda hızlıca arama yapın</li><li>✨ Zengin metin düzenleyici</li></ul><p><br></p><blockquote>Başlamak için sol menüden yeni bir not oluşturabilirsiniz.</blockquote>',
-                    color: '#7c3aed',
-                    pinned: false,
-                    createdAt: Date.now(),
-                    updatedAt: Date.now()
+                    id: uid(), title: 'NeonNotes\'a Hoş Geldiniz!',
+                    content: '<h2>🎉 Hoş Geldiniz!</h2><p>Bu uygulama ile notlarınızı kolayca yönetebilirsiniz.</p><p><br></p><ul><li>📁 Klasörlerle organize edin</li><li>⭐ Favori klasörleri sabitleyin</li><li>🔍 Notlarda hızlıca arama yapın</li><li>💾 Her değişiklik anında kaydedilir</li></ul><p><br></p><blockquote>Yazdığınız her şey anında kaydedilir, hiçbir şey kaybolmaz.</blockquote>',
+                    createdAt: Date.now(), updatedAt: Date.now()
                 },
                 {
-                    id: noteId2,
-                    title: 'Yapılacaklar Listesi',
-                    content: '<p>✅ NeonNotes kurulumu tamamlandı</p><p>⬜ Yeni projeler için notlar oluştur</p><p>⬜ Önemli bağlantıları kaydet</p><p>⬜ Haftalık plan yap</p>',
-                    color: '#06b6d4',
-                    pinned: false,
-                    createdAt: Date.now() - 100000,
-                    updatedAt: Date.now() - 100000
+                    id: uid(), title: 'Yapılacaklar',
+                    content: '<p>✅ NeonNotes kurulumu tamamlandı</p><p>⬜ Yeni projeler için notlar oluştur</p><p>⬜ Önemli bağlantıları kaydet</p>',
+                    createdAt: Date.now() - 100000, updatedAt: Date.now() - 100000
                 }
             ]
         },
         {
-            id: folderId2,
-            name: 'Projeler',
-            icon: '🚀',
-            starred: false,
-            createdAt: Date.now() - 200000,
+            id: f2, name: 'Projeler', icon: '🚀', starred: false, createdAt: Date.now() - 200000,
             notes: [
                 {
-                    id: noteId3,
-                    title: 'Proje Fikirleri',
-                    content: '<p>💡 <b>Proje Fikirleri</b></p><p><br></p><ul><li>Web uygulaması geliştirme</li><li>Mobil uygulama tasarımı</li><li>API entegrasyonları</li></ul>',
-                    color: '#10b981',
-                    pinned: false,
-                    createdAt: Date.now() - 300000,
-                    updatedAt: Date.now() - 300000
+                    id: uid(), title: 'Proje Fikirleri',
+                    content: '<p>💡 <b>Proje Fikirleri</b></p><ul><li>Web uygulaması geliştirme</li><li>Mobil uygulama tasarımı</li><li>API entegrasyonları</li></ul>',
+                    createdAt: Date.now() - 300000, updatedAt: Date.now() - 300000
                 }
             ]
         }
     ];
-    appData.expandedFolders[folderId1] = true;
-    appData.expandedFolders[folderId2] = true;
+    appData.expandedFolders[f1] = true;
+    appData.expandedFolders[f2] = true;
     saveData();
 }
 
-// ===== HELPER FUNCTIONS =====
-function getFolder(folderId) {
-    return appData.folders.find(f => f.id === folderId);
-}
-
-function getNote(noteId) {
-    for (const folder of appData.folders) {
-        const note = folder.notes.find(n => n.id === noteId);
-        if (note) return { note, folder };
+// ===== HELPERS =====
+function getFolder(id) { return appData.folders.find(f => f.id === id); }
+function getNote(id) {
+    for (const f of appData.folders) {
+        const n = f.notes.find(n => n.id === id);
+        if (n) return { note: n, folder: f };
     }
     return null;
 }
+function getAllNotes() { return appData.folders.flatMap(f => f.notes); }
 
-function getAllNotes() {
-    return appData.folders.flatMap(f => f.notes);
-}
-
-function formatDate(timestamp) {
-    const d = new Date(timestamp);
-    const now = new Date();
-    const diff = now - d;
+function formatDate(ts) {
+    const d = new Date(ts), diff = Date.now() - ts;
     if (diff < 60000) return 'Az önce';
     if (diff < 3600000) return Math.floor(diff / 60000) + ' dk önce';
     if (diff < 86400000) return Math.floor(diff / 3600000) + ' saat önce';
-    const day = d.getDate().toString().padStart(2, '0');
-    const month = (d.getMonth() + 1).toString().padStart(2, '0');
-    const year = d.getFullYear();
-    const hour = d.getHours().toString().padStart(2, '0');
-    const min = d.getMinutes().toString().padStart(2, '0');
-    return `${day}.${month}.${year} ${hour}:${min}`;
+    return `${d.getDate().toString().padStart(2,'0')}.${(d.getMonth()+1).toString().padStart(2,'0')}.${d.getFullYear()} ${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}`;
 }
 
+function escapeHTML(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
 // ===== TOAST =====
-function showToast(message, type = 'success') {
-    const container = document.getElementById('toastContainer');
-    const toast = document.createElement('div');
-    toast.className = `toast ${type}`;
-    const icons = { success: '✓', error: '✗', info: 'ℹ' };
-    toast.innerHTML = `<span>${icons[type] || ''}</span> ${message}`;
-    container.appendChild(toast);
-    setTimeout(() => toast.remove(), 3000);
+function showToast(msg, type = 'success') {
+    const c = document.getElementById('toastContainer');
+    const t = document.createElement('div');
+    t.className = `toast ${type}`;
+    t.innerHTML = msg;
+    c.appendChild(t);
+    setTimeout(() => t.remove(), 3000);
 }
 
 // ===== CONTEXT MENU =====
-let activeContextMenu = null;
+let ctxMenu = null;
 
-function showContextMenu(e, items) {
-    hideContextMenu();
-    const menu = document.createElement('div');
-    menu.className = 'context-menu';
-
+function showCtx(e, items) {
+    hideCtx();
+    const m = document.createElement('div');
+    m.className = 'context-menu';
     items.forEach(item => {
-        if (item.divider) {
-            const div = document.createElement('div');
-            div.className = 'context-menu-divider';
-            menu.appendChild(div);
-            return;
-        }
+        if (item.divider) { const d = document.createElement('div'); d.className = 'ctx-divider'; m.appendChild(d); return; }
         const el = document.createElement('div');
-        el.className = 'context-menu-item' + (item.danger ? ' danger' : '');
-        el.innerHTML = `<span>${item.icon || ''}</span> ${item.label}`;
-        el.onclick = () => {
-            hideContextMenu();
-            item.action();
-        };
-        menu.appendChild(el);
+        el.className = 'ctx-item' + (item.danger ? ' danger' : '');
+        el.innerHTML = `<span>${item.icon||''}</span> ${item.label}`;
+        el.onclick = () => { hideCtx(); item.action(); };
+        m.appendChild(el);
     });
-
-    document.body.appendChild(menu);
-
-    // Position
-    const rect = menu.getBoundingClientRect();
-    let x = e.clientX;
-    let y = e.clientY;
-    if (x + rect.width > window.innerWidth) x = window.innerWidth - rect.width - 8;
-    if (y + rect.height > window.innerHeight) y = window.innerHeight - rect.height - 8;
-    menu.style.left = x + 'px';
-    menu.style.top = y + 'px';
-
-    activeContextMenu = menu;
+    document.body.appendChild(m);
+    const r = m.getBoundingClientRect();
+    m.style.left = Math.min(e.clientX, window.innerWidth - r.width - 8) + 'px';
+    m.style.top = Math.min(e.clientY, window.innerHeight - r.height - 8) + 'px';
+    ctxMenu = m;
 }
 
-function hideContextMenu() {
-    if (activeContextMenu) {
-        activeContextMenu.remove();
-        activeContextMenu = null;
-    }
-}
-
-document.addEventListener('click', hideContextMenu);
-document.addEventListener('contextmenu', (e) => {
-    if (!e.target.closest('.folder-header') && !e.target.closest('.note-item')) {
-        hideContextMenu();
-    }
-});
+function hideCtx() { if (ctxMenu) { ctxMenu.remove(); ctxMenu = null; } }
+document.addEventListener('click', hideCtx);
 
 // ===== MODAL =====
 function showModal({ title, placeholder, defaultValue = '', iconPicker = false, onConfirm }) {
-    const overlay = document.createElement('div');
-    overlay.className = 'modal-overlay';
-
-    const icons = ['📋', '📁', '🚀', '💡', '🎮', '📚', '🎵', '🎨', '⚙️', '🌟', '📌', '🏠', '💼', '🔬', '📝', '🗂️'];
-    let selectedIcon = '📁';
-
-    overlay.innerHTML = `
+    const ov = document.createElement('div');
+    ov.className = 'modal-overlay';
+    const icons = ['📋','📁','🚀','💡','🎮','📚','🎵','🎨','⚙️','🌟','📌','🏠','💼','🔬','📝','🗂️'];
+    let selIcon = '📁';
+    ov.innerHTML = `
         <div class="modal">
             <div class="modal-title">${title}</div>
             <input class="modal-input" placeholder="${placeholder}" value="${defaultValue}" id="modalInput" autofocus>
-            ${iconPicker ? `
-                <div style="font-size:12px; color:var(--text-muted); margin-top:8px;">İkon seçin:</div>
-                <div class="modal-icon-picker">
-                    ${icons.map((icon, i) => `<div class="icon-option${i === 0 ? ' active' : ''}" data-icon="${icon}">${icon}</div>`).join('')}
-                </div>
-            ` : ''}
+            ${iconPicker ? `<div style="font-size:11px;color:var(--text-muted);margin-top:8px;">İkon:</div><div class="modal-icon-picker">${icons.map((ic,i) => `<div class="icon-option${i===0?' active':''}" data-icon="${ic}">${ic}</div>`).join('')}</div>` : ''}
             <div class="modal-actions">
                 <button class="btn btn-ghost" id="modalCancel">İptal</button>
                 <button class="btn btn-primary" id="modalConfirm">Tamam</button>
             </div>
-        </div>
-    `;
-
-    document.body.appendChild(overlay);
-    const input = overlay.querySelector('#modalInput');
-    input.focus();
-    input.select();
-
-    if (iconPicker) {
-        overlay.querySelectorAll('.icon-option').forEach(opt => {
-            opt.onclick = () => {
-                overlay.querySelectorAll('.icon-option').forEach(o => o.classList.remove('active'));
-                opt.classList.add('active');
-                selectedIcon = opt.dataset.icon;
-            };
-        });
-    }
-
-    const close = () => overlay.remove();
-
-    overlay.querySelector('#modalCancel').onclick = close;
-    overlay.onclick = (e) => { if (e.target === overlay) close(); };
-    overlay.querySelector('#modalConfirm').onclick = () => {
-        const val = input.value.trim();
-        if (val) {
-            onConfirm(val, selectedIcon);
-            close();
-        }
-    };
-    input.onkeydown = (e) => {
-        if (e.key === 'Enter') {
-            const val = input.value.trim();
-            if (val) {
-                onConfirm(val, selectedIcon);
-                close();
-            }
-        }
-        if (e.key === 'Escape') close();
-    };
+        </div>`;
+    document.body.appendChild(ov);
+    const inp = ov.querySelector('#modalInput');
+    inp.focus(); inp.select();
+    if (iconPicker) ov.querySelectorAll('.icon-option').forEach(o => { o.onclick = () => { ov.querySelectorAll('.icon-option').forEach(x => x.classList.remove('active')); o.classList.add('active'); selIcon = o.dataset.icon; }; });
+    const close = () => ov.remove();
+    const confirm = () => { const v = inp.value.trim(); if (v) { onConfirm(v, selIcon); close(); } };
+    ov.querySelector('#modalCancel').onclick = close;
+    ov.onclick = e => { if (e.target === ov) close(); };
+    ov.querySelector('#modalConfirm').onclick = confirm;
+    inp.onkeydown = e => { if (e.key === 'Enter') confirm(); if (e.key === 'Escape') close(); };
 }
 
 // ===== RENDER =====
 function renderFolders() {
-    const container = document.getElementById('folderList');
-    const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
-
-    // Sort: starred first, then by name
-    const sorted = [...appData.folders].sort((a, b) => {
-        if (a.starred && !b.starred) return -1;
-        if (!a.starred && b.starred) return 1;
-        return a.name.localeCompare(b.name);
-    });
-
-    let html = '';
-
-    // Starred section
+    const c = document.getElementById('folderList');
+    const q = document.getElementById('searchInput').value.toLowerCase().trim();
+    const sorted = [...appData.folders].sort((a, b) => (a.starred === b.starred) ? a.name.localeCompare(b.name) : (a.starred ? -1 : 1));
     const starred = sorted.filter(f => f.starred);
     const unstarred = sorted.filter(f => !f.starred);
-
-    if (starred.length > 0) {
-        html += '<div class="section-label">⭐ Sabitlenmiş</div>';
-        starred.forEach(f => { html += renderFolderHTML(f, searchTerm); });
-    }
-
-    if (unstarred.length > 0) {
-        if (starred.length > 0) html += '<div class="section-label" style="margin-top:4px;">📂 Klasörler</div>';
-        unstarred.forEach(f => { html += renderFolderHTML(f, searchTerm); });
-    }
-
-    container.innerHTML = html;
-    attachFolderEvents();
+    let h = '';
+    if (starred.length) { h += '<div class="section-label">⭐ Sabitlenmiş</div>'; starred.forEach(f => h += folderHTML(f, q)); }
+    if (unstarred.length) { if (starred.length) h += '<div class="section-label" style="margin-top:2px">📂 Klasörler</div>'; unstarred.forEach(f => h += folderHTML(f, q)); }
+    c.innerHTML = h;
+    attachEvents();
 }
 
-function renderFolderHTML(folder, searchTerm) {
-    const isExpanded = appData.expandedFolders[folder.id];
-    const isActive = appData.activeFolderId === folder.id;
-
-    // Filter notes by search
+function folderHTML(folder, q) {
+    const exp = appData.expandedFolders[folder.id];
+    const act = appData.activeFolderId === folder.id;
     let notes = folder.notes;
-    if (searchTerm) {
-        notes = notes.filter(n =>
-            n.title.toLowerCase().includes(searchTerm) ||
-            n.content.replace(/<[^>]*>/g, '').toLowerCase().includes(searchTerm)
-        );
-        if (notes.length === 0 && !folder.name.toLowerCase().includes(searchTerm)) {
-            return '';
-        }
-    }
-
-    let html = `
-        <div class="folder-item" data-folder-id="${folder.id}">
-            <div class="folder-header ${isActive ? 'active' : ''}" data-folder-id="${folder.id}">
-                <span class="folder-chevron ${isExpanded ? 'open' : ''}">▶</span>
-                <span class="folder-icon">${folder.icon || '📁'}</span>
-                <span class="folder-name">${escapeHTML(folder.name)}</span>
-                <span class="folder-count">${folder.notes.length}</span>
-                <span class="folder-star ${folder.starred ? 'starred' : ''}" data-folder-id="${folder.id}">★</span>
-                <span class="folder-menu-btn" data-folder-id="${folder.id}">⋮</span>
-            </div>
-            <div class="note-list ${isExpanded ? '' : 'collapsed'}" style="max-height:${isExpanded ? notes.length * 60 + 40 + 'px' : '0'}">
-    `;
-
-    notes.forEach(note => {
-        const isNoteActive = appData.activeNoteId === note.id;
-        html += `
-            <div class="note-item ${isNoteActive ? 'active' : ''}" data-note-id="${note.id}" data-folder-id="${folder.id}">
-                <span class="note-color-dot" style="background:${note.color || '#7c3aed'}"></span>
-                <div class="note-info">
-                    <div class="note-title">${escapeHTML(note.title || 'Başlıksız Not')}</div>
-                    <div class="note-date">${formatDate(note.updatedAt)}</div>
-                </div>
-                <span class="note-delete-btn" data-note-id="${note.id}" data-folder-id="${folder.id}" title="Sil">✕</span>
-            </div>
-        `;
-    });
-
-    html += `
-                <div class="add-note-btn" data-folder-id="${folder.id}">
-                    <span>+</span> Yeni Not Ekle
-                </div>
-            </div>
+    if (q) { notes = notes.filter(n => n.title.toLowerCase().includes(q) || n.content.replace(/<[^>]*>/g,'').toLowerCase().includes(q)); if (!notes.length && !folder.name.toLowerCase().includes(q)) return ''; }
+    let h = `<div data-fid="${folder.id}">
+        <div class="folder-header ${act?'active':''}" data-fid="${folder.id}">
+            <span class="folder-chevron ${exp?'open':''}">▶</span>
+            <span class="folder-icon">${folder.icon||'📁'}</span>
+            <span class="folder-name">${escapeHTML(folder.name)}</span>
+            <span class="folder-count">${folder.notes.length}</span>
+            <span class="folder-star ${folder.starred?'starred':''}" data-fid="${folder.id}">★</span>
+            <span class="folder-menu-btn" data-fid="${folder.id}">⋮</span>
         </div>
-    `;
-
-    return html;
+        <div class="note-list ${exp?'':'collapsed'}" style="max-height:${exp ? notes.length*48+36+'px' : '0'}">`;
+    notes.forEach(n => {
+        const na = appData.activeNoteId === n.id;
+        h += `<div class="note-item ${na?'active':''}" data-nid="${n.id}" data-fid="${folder.id}">
+            <span class="note-icon">📄</span>
+            <div class="note-info"><div class="note-title">${escapeHTML(n.title||'Başlıksız Not')}</div><div class="note-date">${formatDate(n.updatedAt)}</div></div>
+            <span class="note-delete-btn" data-nid="${n.id}" data-fid="${folder.id}">✕</span>
+        </div>`;
+    });
+    h += `<div class="add-note-btn" data-fid="${folder.id}"><span>+</span> Yeni Not Ekle</div></div></div>`;
+    return h;
 }
 
-function escapeHTML(str) {
-    const div = document.createElement('div');
-    div.textContent = str;
-    return div.innerHTML;
-}
-
-function attachFolderEvents() {
-    // Folder header click - toggle expand
+function attachEvents() {
     document.querySelectorAll('.folder-header').forEach(el => {
-        el.onclick = (e) => {
+        el.onclick = e => {
             if (e.target.classList.contains('folder-star') || e.target.classList.contains('folder-menu-btn')) return;
-            const folderId = el.dataset.folderId;
-            appData.expandedFolders[folderId] = !appData.expandedFolders[folderId];
-            appData.activeFolderId = folderId;
-            saveData();
-            renderFolders();
+            const id = el.dataset.fid;
+            appData.expandedFolders[id] = !appData.expandedFolders[id];
+            appData.activeFolderId = id;
+            saveData(); renderFolders();
         };
-
-        // Right click
-        el.oncontextmenu = (e) => {
-            e.preventDefault();
-            const folderId = el.dataset.folderId;
-            showFolderContextMenu(e, folderId);
-        };
+        el.oncontextmenu = e => { e.preventDefault(); folderCtx(e, el.dataset.fid); };
     });
 
-    // Folder star click
     document.querySelectorAll('.folder-star').forEach(el => {
-        el.onclick = (e) => {
-            e.stopPropagation();
-            const folderId = el.dataset.folderId;
-            const folder = getFolder(folderId);
-            if (folder) {
-                folder.starred = !folder.starred;
-                saveData();
-                renderFolders();
-                showToast(folder.starred ? 'Klasör sabitlendi ⭐' : 'Sabitleme kaldırıldı', 'info');
-            }
-        };
+        el.onclick = e => { e.stopPropagation(); const f = getFolder(el.dataset.fid); if (f) { f.starred = !f.starred; saveData(); renderFolders(); } };
     });
 
-    // Folder menu button
     document.querySelectorAll('.folder-menu-btn').forEach(el => {
-        el.onclick = (e) => {
-            e.stopPropagation();
-            const folderId = el.dataset.folderId;
-            showFolderContextMenu(e, folderId);
-        };
+        el.onclick = e => { e.stopPropagation(); folderCtx(e, el.dataset.fid); };
     });
 
-    // Note item click
     document.querySelectorAll('.note-item').forEach(el => {
-        el.onclick = (e) => {
-            if (e.target.classList.contains('note-delete-btn')) return;
-            const noteId = el.dataset.noteId;
-            openNote(noteId);
-        };
-
-        el.oncontextmenu = (e) => {
-            e.preventDefault();
-            const noteId = el.dataset.noteId;
-            const folderId = el.dataset.folderId;
-            showNoteContextMenu(e, noteId, folderId);
-        };
+        el.onclick = e => { if (e.target.classList.contains('note-delete-btn')) return; openNote(el.dataset.nid); };
+        el.oncontextmenu = e => { e.preventDefault(); noteCtx(e, el.dataset.nid, el.dataset.fid); };
     });
 
-    // Note delete button
     document.querySelectorAll('.note-delete-btn').forEach(el => {
-        el.onclick = (e) => {
-            e.stopPropagation();
-            const noteId = el.dataset.noteId;
-            const folderId = el.dataset.folderId;
-            deleteNote(noteId, folderId);
-        };
+        el.onclick = e => { e.stopPropagation(); deleteNote(el.dataset.nid, el.dataset.fid); };
     });
 
-    // Add note button
     document.querySelectorAll('.add-note-btn').forEach(el => {
-        el.onclick = () => {
-            const folderId = el.dataset.folderId;
-            createNote(folderId);
-        };
+        el.onclick = () => createNote(el.dataset.fid);
     });
 }
 
-function showFolderContextMenu(e, folderId) {
-    const folder = getFolder(folderId);
-    if (!folder) return;
-
-    showContextMenu(e, [
-        { icon: '📝', label: 'Yeni Not Ekle', action: () => createNote(folderId) },
+function folderCtx(e, fid) {
+    const f = getFolder(fid); if (!f) return;
+    showCtx(e, [
+        { icon: '📝', label: 'Yeni Not', action: () => createNote(fid) },
         { divider: true },
-        { icon: '✏️', label: 'Yeniden Adlandır', action: () => renameFolder(folderId) },
-        { icon: folder.starred ? '☆' : '⭐', label: folder.starred ? 'Sabitlemeyi Kaldır' : 'Sabitle', action: () => {
-            folder.starred = !folder.starred;
-            saveData();
-            renderFolders();
-        }},
+        { icon: '✏️', label: 'Adını Değiştir', action: () => renameFolder(fid) },
+        { icon: f.starred ? '☆' : '⭐', label: f.starred ? 'Sabitlemeyi Kaldır' : 'Sabitle', action: () => { f.starred = !f.starred; saveData(); renderFolders(); } },
         { divider: true },
-        { icon: '🗑', label: 'Klasörü Sil', danger: true, action: () => deleteFolder(folderId) }
+        { icon: '🗑', label: 'Sil', danger: true, action: () => deleteFolder(fid) }
     ]);
 }
 
-function showNoteContextMenu(e, noteId, folderId) {
-    const result = getNote(noteId);
-    if (!result) return;
-
-    // Get other folders for move
-    const otherFolders = appData.folders.filter(f => f.id !== folderId);
-
+function noteCtx(e, nid, fid) {
+    const others = appData.folders.filter(f => f.id !== fid);
     const items = [
-        { icon: '📝', label: 'Düzenle', action: () => openNote(noteId) },
-        { icon: '📋', label: 'Kopyala', action: () => duplicateNote(noteId, folderId) },
+        { icon: '📝', label: 'Düzenle', action: () => openNote(nid) },
+        { icon: '📋', label: 'Kopyala', action: () => duplicateNote(nid, fid) },
     ];
-
-    if (otherFolders.length > 0) {
+    if (others.length) {
         items.push({ divider: true });
-        otherFolders.forEach(f => {
-            items.push({
-                icon: f.icon || '📁',
-                label: `${f.name}'e Taşı`,
-                action: () => moveNote(noteId, folderId, f.id)
-            });
-        });
+        others.forEach(f => items.push({ icon: f.icon||'📁', label: `${f.name}'e Taşı`, action: () => moveNote(nid, fid, f.id) }));
     }
-
     items.push({ divider: true });
-    items.push({ icon: '🗑', label: 'Sil', danger: true, action: () => deleteNote(noteId, folderId) });
-
-    showContextMenu(e, items);
+    items.push({ icon: '🗑', label: 'Sil', danger: true, action: () => deleteNote(nid, fid) });
+    showCtx(e, items);
 }
 
-// ===== FOLDER OPERATIONS =====
+// ===== OPERATIONS =====
 function createFolder() {
-    showModal({
-        title: '📁 Yeni Klasör Oluştur',
-        placeholder: 'Klasör adı...',
-        iconPicker: true,
-        onConfirm: (name, icon) => {
-            const folder = {
-                id: generateId(),
-                name: name,
-                icon: icon,
-                starred: false,
-                createdAt: Date.now(),
-                notes: []
-            };
-            appData.folders.push(folder);
-            appData.expandedFolders[folder.id] = true;
-            saveData();
-            renderFolders();
-            showToast('Klasör oluşturuldu ✨');
-        }
-    });
+    showModal({ title: '📁 Yeni Klasör', placeholder: 'Klasör adı...', iconPicker: true, onConfirm: (name, icon) => {
+        const f = { id: uid(), name, icon, starred: false, createdAt: Date.now(), notes: [] };
+        appData.folders.push(f); appData.expandedFolders[f.id] = true;
+        saveData(); renderFolders(); showToast('Klasör oluşturuldu ✨');
+    }});
 }
 
-function renameFolder(folderId) {
-    const folder = getFolder(folderId);
-    if (!folder) return;
-
-    showModal({
-        title: '✏️ Klasörü Yeniden Adlandır',
-        placeholder: 'Yeni ad...',
-        defaultValue: folder.name,
-        onConfirm: (name) => {
-            folder.name = name;
-            saveData();
-            renderFolders();
-            showToast('Klasör adı güncellendi');
-        }
-    });
+function renameFolder(fid) {
+    const f = getFolder(fid); if (!f) return;
+    showModal({ title: '✏️ Adını Değiştir', placeholder: 'Yeni ad...', defaultValue: f.name, onConfirm: name => {
+        f.name = name; saveData(); renderFolders();
+    }});
 }
 
-function deleteFolder(folderId) {
-    const folder = getFolder(folderId);
-    if (!folder) return;
-
-    if (folder.notes.length > 0) {
-        if (!confirm(`"${folder.name}" klasörü ve içindeki ${folder.notes.length} not silinecek. Emin misiniz?`)) return;
-    }
-
-    appData.folders = appData.folders.filter(f => f.id !== folderId);
-    if (appData.activeFolderId === folderId) appData.activeFolderId = null;
-
-    // Close editor if active note was in this folder
-    const activeResult = appData.activeNoteId ? getNote(appData.activeNoteId) : null;
-    if (!activeResult) {
-        appData.activeNoteId = null;
-        showEmptyState();
-    }
-
-    delete appData.expandedFolders[folderId];
-    saveData();
-    renderFolders();
-    showToast('Klasör silindi', 'error');
+function deleteFolder(fid) {
+    const f = getFolder(fid); if (!f) return;
+    if (f.notes.length && !confirm(`"${f.name}" ve içindeki ${f.notes.length} not silinecek?`)) return;
+    appData.folders = appData.folders.filter(x => x.id !== fid);
+    if (appData.activeFolderId === fid) appData.activeFolderId = null;
+    if (appData.activeNoteId && !getNote(appData.activeNoteId)) { appData.activeNoteId = null; showEmptyState(); }
+    delete appData.expandedFolders[fid];
+    saveData(); renderFolders(); showToast('Silindi', 'error');
 }
 
-// ===== NOTE OPERATIONS =====
-function createNote(folderId) {
-    const folder = getFolder(folderId);
-    if (!folder) return;
-
-    const note = {
-        id: generateId(),
-        title: 'Yeni Not',
-        content: '',
-        color: '#7c3aed',
-        pinned: false,
-        createdAt: Date.now(),
-        updatedAt: Date.now()
-    };
-
-    folder.notes.unshift(note);
-    appData.expandedFolders[folderId] = true;
-    appData.activeFolderId = folderId;
-    saveData();
-    renderFolders();
-    openNote(note.id);
-    showToast('Yeni not oluşturuldu ✨');
+function createNote(fid) {
+    const f = getFolder(fid); if (!f) return;
+    const n = { id: uid(), title: 'Yeni Not', content: '', createdAt: Date.now(), updatedAt: Date.now() };
+    f.notes.unshift(n);
+    appData.expandedFolders[fid] = true;
+    appData.activeFolderId = fid;
+    saveData(); renderFolders(); openNote(n.id);
+    showToast('Not oluşturuldu ✨');
 }
 
 function createQuickNote() {
-    // Create in the first available folder, or create one
-    if (appData.folders.length === 0) {
-        const folder = {
-            id: generateId(),
-            name: 'Notlarım',
-            icon: '📋',
-            starred: false,
-            createdAt: Date.now(),
-            notes: []
-        };
-        appData.folders.push(folder);
-        appData.expandedFolders[folder.id] = true;
-    }
-
-    const folder = appData.folders[0];
-    createNote(folder.id);
+    if (!appData.folders.length) { const f = { id: uid(), name: 'Notlarım', icon: '📋', starred: false, createdAt: Date.now(), notes: [] }; appData.folders.push(f); appData.expandedFolders[f.id] = true; }
+    createNote(appData.folders[0].id);
 }
 
-function deleteNote(noteId, folderId) {
-    const folder = getFolder(folderId);
-    if (!folder) return;
-
-    folder.notes = folder.notes.filter(n => n.id !== noteId);
-
-    if (appData.activeNoteId === noteId) {
-        appData.activeNoteId = null;
-        showEmptyState();
-    }
-
-    saveData();
-    renderFolders();
-    showToast('Not silindi', 'error');
+function deleteNote(nid, fid) {
+    const f = getFolder(fid); if (!f) return;
+    f.notes = f.notes.filter(n => n.id !== nid);
+    if (appData.activeNoteId === nid) { appData.activeNoteId = null; showEmptyState(); }
+    saveData(); renderFolders(); showToast('Silindi', 'error');
 }
 
-function duplicateNote(noteId, folderId) {
-    const folder = getFolder(folderId);
-    if (!folder) return;
-    const result = getNote(noteId);
-    if (!result) return;
-
-    const copy = {
-        ...JSON.parse(JSON.stringify(result.note)),
-        id: generateId(),
-        title: result.note.title + ' (Kopya)',
-        createdAt: Date.now(),
-        updatedAt: Date.now()
-    };
-
-    folder.notes.push(copy);
-    saveData();
-    renderFolders();
-    showToast('Not kopyalandı 📋');
+function duplicateNote(nid, fid) {
+    const f = getFolder(fid), r = getNote(nid); if (!f || !r) return;
+    const c = { ...JSON.parse(JSON.stringify(r.note)), id: uid(), title: r.note.title + ' (Kopya)', createdAt: Date.now(), updatedAt: Date.now() };
+    f.notes.push(c); saveData(); renderFolders(); showToast('Kopyalandı 📋');
 }
 
-function moveNote(noteId, fromFolderId, toFolderId) {
-    const fromFolder = getFolder(fromFolderId);
-    const toFolder = getFolder(toFolderId);
-    if (!fromFolder || !toFolder) return;
-
-    const noteIndex = fromFolder.notes.findIndex(n => n.id === noteId);
-    if (noteIndex === -1) return;
-
-    const [note] = fromFolder.notes.splice(noteIndex, 1);
-    toFolder.notes.push(note);
-
-    appData.expandedFolders[toFolderId] = true;
-    saveData();
-    renderFolders();
-    showToast(`Not "${toFolder.name}" klasörüne taşındı`);
+function moveNote(nid, from, to) {
+    const ff = getFolder(from), tf = getFolder(to); if (!ff || !tf) return;
+    const i = ff.notes.findIndex(n => n.id === nid); if (i === -1) return;
+    const [n] = ff.notes.splice(i, 1); tf.notes.push(n);
+    appData.expandedFolders[to] = true;
+    saveData(); renderFolders(); showToast(`"${tf.name}" klasörüne taşındı`);
 }
 
 // ===== EDITOR =====
-let currentEditingNote = null;
+function openNote(nid) {
+    // Before switching, save current note
+    if (currentEditingNote) {
+        const prev = getNote(currentEditingNote.note.id);
+        if (prev) {
+            prev.note.title = document.getElementById('noteTitleInput').value.trim() || 'Başlıksız Not';
+            prev.note.content = document.getElementById('richEditor').innerHTML;
+            prev.note.updatedAt = Date.now();
+        }
+    }
 
-function openNote(noteId) {
-    const result = getNote(noteId);
-    if (!result) return;
+    const r = getNote(nid); if (!r) return;
+    currentEditingNote = r;
+    appData.activeNoteId = nid;
+    appData.activeFolderId = r.folder.id;
 
-    currentEditingNote = result;
-    appData.activeNoteId = noteId;
-    appData.activeFolderId = result.folder.id;
-
-    // Show editor
     document.getElementById('emptyState').style.display = 'none';
     document.getElementById('editorView').style.display = 'flex';
-
-    // Populate fields
-    document.getElementById('noteTitleInput').value = result.note.title;
-    document.getElementById('richEditor').innerHTML = result.note.content;
-    document.getElementById('editorFolderBadge').textContent = result.folder.icon + ' ' + result.folder.name;
-    document.getElementById('editorDate').textContent = formatDate(result.note.updatedAt);
-
-    // Set color
-    document.querySelectorAll('.color-option').forEach(opt => {
-        opt.classList.toggle('active', opt.dataset.color === (result.note.color || '#7c3aed'));
-    });
+    document.getElementById('noteTitleInput').value = r.note.title;
+    document.getElementById('richEditor').innerHTML = r.note.content;
+    document.getElementById('editorFolderBadge').textContent = r.folder.icon + ' ' + r.folder.name;
+    document.getElementById('editorDate').textContent = formatDate(r.note.updatedAt);
 
     updateCharCount();
-    saveData();
-    renderFolders();
+    saveData(); renderFolders();
 
-    // Hide sidebar on mobile
-    if (window.innerWidth <= 500) {
-        document.getElementById('sidebar').classList.add('hidden');
-    }
+    if (window.innerWidth <= 500) document.getElementById('sidebar').classList.add('hidden');
 }
 
 function showEmptyState() {
@@ -1893,175 +1287,87 @@ function showEmptyState() {
     currentEditingNote = null;
 }
 
-function saveCurrentNote() {
-    if (!currentEditingNote) return;
-
-    const result = getNote(currentEditingNote.note.id);
-    if (!result) return;
-
-    result.note.title = document.getElementById('noteTitleInput').value.trim() || 'Başlıksız Not';
-    result.note.content = document.getElementById('richEditor').innerHTML;
-    result.note.updatedAt = Date.now();
-
-    // Get selected color
-    const activeColor = document.querySelector('.color-option.active');
-    if (activeColor) {
-        result.note.color = activeColor.dataset.color;
-    }
-
-    currentEditingNote = result;
-    saveData();
-    renderFolders();
-
-    document.getElementById('editorDate').textContent = formatDate(result.note.updatedAt);
-    showToast('Not kaydedildi 💾');
-}
-
 function deleteCurrentNote() {
     if (!currentEditingNote) return;
-
-    if (!confirm(`"${currentEditingNote.note.title}" notu silinecek. Emin misiniz?`)) return;
-
+    if (!confirm(`"${currentEditingNote.note.title}" silinecek?`)) return;
     deleteNote(currentEditingNote.note.id, currentEditingNote.folder.id);
 }
 
 function updateCharCount() {
-    const editor = document.getElementById('richEditor');
-    const text = editor.textContent || '';
-    const count = text.length;
-    const words = text.trim() ? text.trim().split(/\s+/).length : 0;
-    document.getElementById('charCount').textContent = `${count} karakter · ${words} kelime`;
+    const t = document.getElementById('richEditor').textContent || '';
+    const w = t.trim() ? t.trim().split(/\s+/).length : 0;
+    document.getElementById('charCount').textContent = `${t.length} karakter · ${w} kelime`;
 }
 
-// ===== TOOLBAR =====
-document.getElementById('editorToolbar').addEventListener('click', (e) => {
-    const btn = e.target.closest('.toolbar-btn');
-    if (!btn) return;
-
-    const cmd = btn.dataset.cmd;
-    const cmdBlock = btn.dataset.cmdBlock;
-
-    if (cmd) {
-        document.execCommand(cmd, false, null);
-    } else if (cmdBlock === 'h2') {
-        document.execCommand('formatBlock', false, '<h2>');
-    } else if (cmdBlock === 'blockquote') {
-        document.execCommand('formatBlock', false, '<blockquote>');
-    }
-
-    document.getElementById('richEditor').focus();
-});
-
-document.getElementById('insertLinkBtn').addEventListener('click', () => {
-    const url = prompt('Link URL girin:', 'https://');
-    if (url) {
-        document.execCommand('createLink', false, url);
-    }
-    document.getElementById('richEditor').focus();
-});
-
-document.getElementById('insertCodeBtn').addEventListener('click', () => {
-    document.execCommand('insertHTML', false, '<code>kod</code>');
-    document.getElementById('richEditor').focus();
-});
-
-// Color picker
-document.querySelectorAll('.color-option').forEach(opt => {
-    opt.addEventListener('click', () => {
-        document.querySelectorAll('.color-option').forEach(o => o.classList.remove('active'));
-        opt.classList.add('active');
-    });
-});
-
-// ===== STATS =====
 function updateStats() {
-    const folders = appData.folders.length;
-    const notes = getAllNotes().length;
-    const chars = getAllNotes().reduce((sum, n) => {
-        const div = document.createElement('div');
-        div.innerHTML = n.content;
-        return sum + (div.textContent || '').length;
-    }, 0);
-
-    document.getElementById('totalFolders').textContent = folders;
-    document.getElementById('totalNotes').textContent = notes;
-    document.getElementById('totalChars').textContent = chars > 999 ? (chars / 1000).toFixed(1) + 'k' : chars;
+    const notes = getAllNotes();
+    document.getElementById('totalFolders').textContent = appData.folders.length;
+    document.getElementById('totalNotes').textContent = notes.length;
+    const chars = notes.reduce((s, n) => { const d = document.createElement('div'); d.innerHTML = n.content; return s + (d.textContent||'').length; }, 0);
+    document.getElementById('totalChars').textContent = chars > 999 ? (chars/1000).toFixed(1)+'k' : chars;
 }
 
 // ===== EVENT LISTENERS =====
-document.getElementById('newFolderBtn').addEventListener('click', createFolder);
-document.getElementById('newQuickNoteBtn').addEventListener('click', createQuickNote);
-document.getElementById('saveNoteBtn').addEventListener('click', saveCurrentNote);
-document.getElementById('deleteNoteBtn').addEventListener('click', deleteCurrentNote);
+document.getElementById('newFolderBtn').onclick = createFolder;
+document.getElementById('newQuickNoteBtn').onclick = createQuickNote;
+document.getElementById('deleteNoteBtn').onclick = deleteCurrentNote;
+document.getElementById('editorBackBtn').onclick = () => document.getElementById('sidebar').classList.remove('hidden');
+document.getElementById('searchInput').oninput = renderFolders;
 
-document.getElementById('editorBackBtn').addEventListener('click', () => {
-    document.getElementById('sidebar').classList.remove('hidden');
-});
+// Manual save button
+document.getElementById('saveNoteBtn').onclick = () => {
+    if (!currentEditingNote) return;
+    const r = getNote(currentEditingNote.note.id); if (!r) return;
+    r.note.title = document.getElementById('noteTitleInput').value.trim() || 'Başlıksız Not';
+    r.note.content = document.getElementById('richEditor').innerHTML;
+    r.note.updatedAt = Date.now();
+    currentEditingNote = r;
+    saveData(); renderFolders();
+    document.getElementById('editorDate').textContent = formatDate(r.note.updatedAt);
+    showToast('Kaydedildi 💾');
+};
 
-document.getElementById('searchInput').addEventListener('input', () => {
-    renderFolders();
-});
+// INSTANT AUTO-SAVE on every input
+document.getElementById('richEditor').oninput = () => { updateCharCount(); instantSave(); };
+document.getElementById('noteTitleInput').oninput = () => { instantSave(); };
 
-document.getElementById('richEditor').addEventListener('input', updateCharCount);
+// Toolbar
+document.getElementById('editorToolbar').onclick = e => {
+    const btn = e.target.closest('.toolbar-btn'); if (!btn) return;
+    const cmd = btn.dataset.cmd, block = btn.dataset.cmdBlock;
+    if (cmd) document.execCommand(cmd, false, null);
+    else if (block === 'h2') document.execCommand('formatBlock', false, '<h2>');
+    else if (block === 'blockquote') document.execCommand('formatBlock', false, '<blockquote>');
+    document.getElementById('richEditor').focus();
+};
 
-// Auto-save on title change
-document.getElementById('noteTitleInput').addEventListener('input', () => {
-    // Update title preview in sidebar in real-time
-    if (currentEditingNote) {
-        currentEditingNote.note.title = document.getElementById('noteTitleInput').value.trim() || 'Başlıksız Not';
-    }
-});
+document.getElementById('insertLinkBtn').onclick = () => {
+    const url = prompt('Link URL:', 'https://');
+    if (url) document.execCommand('createLink', false, url);
+    document.getElementById('richEditor').focus();
+};
+
+document.getElementById('insertCodeBtn').onclick = () => {
+    document.execCommand('insertHTML', false, '<code>kod</code>');
+    document.getElementById('richEditor').focus();
+};
 
 // Keyboard shortcuts
-document.addEventListener('keydown', (e) => {
-    // Ctrl+S - Save
-    if (e.ctrlKey && e.key === 's') {
-        e.preventDefault();
-        saveCurrentNote();
-    }
-    // Ctrl+N - New quick note
-    if (e.ctrlKey && e.key === 'n') {
-        e.preventDefault();
-        createQuickNote();
-    }
-    // Ctrl+F - Focus search
-    if (e.ctrlKey && e.key === 'f') {
-        e.preventDefault();
-        document.getElementById('searchInput').focus();
-    }
-    // Escape - Clear search or close editor on mobile
+document.addEventListener('keydown', e => {
+    if (e.ctrlKey && e.key === 's') { e.preventDefault(); document.getElementById('saveNoteBtn').click(); }
+    if (e.ctrlKey && e.key === 'n') { e.preventDefault(); createQuickNote(); }
+    if (e.ctrlKey && e.key === 'f') { e.preventDefault(); document.getElementById('searchInput').focus(); }
     if (e.key === 'Escape') {
-        const search = document.getElementById('searchInput');
-        if (document.activeElement === search) {
-            search.value = '';
-            renderFolders();
-            search.blur();
-        } else if (window.innerWidth <= 500) {
-            document.getElementById('sidebar').classList.remove('hidden');
-        }
+        const s = document.getElementById('searchInput');
+        if (document.activeElement === s) { s.value = ''; renderFolders(); s.blur(); }
+        else if (window.innerWidth <= 500) document.getElementById('sidebar').classList.remove('hidden');
     }
 });
-
-// Auto-save every 30 seconds
-setInterval(() => {
-    if (currentEditingNote) {
-        const result = getNote(currentEditingNote.note.id);
-        if (result) {
-            result.note.content = document.getElementById('richEditor').innerHTML;
-            result.note.title = document.getElementById('noteTitleInput').value.trim() || 'Başlıksız Not';
-            const activeColor = document.querySelector('.color-option.active');
-            if (activeColor) result.note.color = activeColor.dataset.color;
-            result.note.updatedAt = Date.now();
-            saveData();
-        }
-    }
-}, 30000);
 
 // ===== INIT =====
 loadData();
 renderFolders();
 updateStats();
 </script>
-
 </body>
 </html>
