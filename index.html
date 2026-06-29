@@ -1218,7 +1218,7 @@ function deleteFolder(fid) {
 function createNote(fid) {
     const f = getFolder(fid); if (!f) return;
     const n = { id: uid(), title: 'Yeni Not', content: '', createdAt: Date.now(), updatedAt: Date.now() };
-    f.notes.unshift(n);
+    f.notes.push(n);
     appData.expandedFolders[fid] = true;
     appData.activeFolderId = fid;
     saveData(); renderFolders(); openNote(n.id);
