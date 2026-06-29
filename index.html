@@ -248,6 +248,28 @@
             font-weight: 500;
         }
 
+        .folder-actions {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .folder-header:hover .folder-actions { opacity: 1; }
+
+        .folder-move-btn {
+            font-size: 9px;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: var(--transition);
+            padding: 2px 3px;
+            border-radius: 3px;
+            line-height: 1;
+        }
+
+        .folder-move-btn:hover { color: var(--accent); background: var(--accent-subtle); }
+
         .folder-star {
             font-size: 11px;
             cursor: pointer;
@@ -325,17 +347,28 @@
             color: var(--text-muted);
         }
 
-        .note-delete-btn {
-            font-size: 11px;
-            color: var(--text-muted);
-            cursor: pointer;
+        .note-actions {
+            display: flex;
+            align-items: center;
+            gap: 2px;
             opacity: 0;
             transition: var(--transition);
-            padding: 2px;
         }
 
-        .note-item:hover .note-delete-btn { opacity: 1; }
-        .note-delete-btn:hover { color: var(--danger); }
+        .note-item:hover .note-actions { opacity: 1; }
+
+        .move-btn, .note-delete-btn {
+            font-size: 10px;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: var(--transition);
+            padding: 2px 3px;
+            border-radius: 3px;
+            line-height: 1;
+        }
+
+        .move-btn:hover { color: var(--accent); background: var(--accent-subtle); }
+        .note-delete-btn:hover { color: var(--danger); background: rgba(239,68,68,0.1); }
 
         .add-note-btn {
             display: flex;
@@ -1091,12 +1124,9 @@ function showModal({ title, placeholder, defaultValue = '', iconPicker = false, 
 function renderFolders() {
     const c = document.getElementById('folderList');
     const q = document.getElementById('searchInput').value.toLowerCase().trim();
-    const sorted = [...appData.folders].sort((a, b) => (a.starred === b.starred) ? a.name.localeCompare(b.name) : (a.starred ? -1 : 1));
-    const starred = sorted.filter(f => f.starred);
-    const unstarred = sorted.filter(f => !f.starred);
+    // Render in actual array order (user-controlled), no auto-sort
     let h = '';
-    if (starred.length) { h += '<div class="section-label">⭐ Sabitlenmiş</div>'; starred.forEach(f => h += folderHTML(f, q)); }
-    if (unstarred.length) { if (starred.length) h += '<div class="section-label" style="margin-top:2px">📂 Klasörler</div>'; unstarred.forEach(f => h += folderHTML(f, q)); }
+    appData.folders.forEach(f => h += folderHTML(f, q));
     c.innerHTML = h;
     attachEvents();
 }
@@ -1106,22 +1136,31 @@ function folderHTML(folder, q) {
     const act = appData.activeFolderId === folder.id;
     let notes = folder.notes;
     if (q) { notes = notes.filter(n => n.title.toLowerCase().includes(q) || n.content.replace(/<[^>]*>/g,'').toLowerCase().includes(q)); if (!notes.length && !folder.name.toLowerCase().includes(q)) return ''; }
+    const fi = appData.folders.indexOf(folder);
     let h = `<div data-fid="${folder.id}">
         <div class="folder-header ${act?'active':''}" data-fid="${folder.id}">
             <span class="folder-chevron ${exp?'open':''}">▶</span>
             <span class="folder-icon">${folder.icon||'📁'}</span>
             <span class="folder-name">${escapeHTML(folder.name)}</span>
             <span class="folder-count">${folder.notes.length}</span>
+            <span class="folder-actions">
+                <span class="folder-move-btn" data-fid="${folder.id}" data-dir="up" title="Yukarı">▲</span>
+                <span class="folder-move-btn" data-fid="${folder.id}" data-dir="down" title="Aşağı">▼</span>
+            </span>
             <span class="folder-star ${folder.starred?'starred':''}" data-fid="${folder.id}">★</span>
             <span class="folder-menu-btn" data-fid="${folder.id}">⋮</span>
         </div>
         <div class="note-list ${exp?'':'collapsed'}" style="max-height:${exp ? notes.length*48+36+'px' : '0'}">`;
-    notes.forEach(n => {
+    notes.forEach((n, ni) => {
         const na = appData.activeNoteId === n.id;
         h += `<div class="note-item ${na?'active':''}" data-nid="${n.id}" data-fid="${folder.id}">
             <span class="note-icon">📄</span>
             <div class="note-info"><div class="note-title">${escapeHTML(n.title||'Başlıksız Not')}</div><div class="note-date">${formatDate(n.updatedAt)}</div></div>
-            <span class="note-delete-btn" data-nid="${n.id}" data-fid="${folder.id}">✕</span>
+            <span class="note-actions">
+                <span class="move-btn" data-nid="${n.id}" data-fid="${folder.id}" data-dir="up" title="Yukarı">▲</span>
+                <span class="move-btn" data-nid="${n.id}" data-fid="${folder.id}" data-dir="down" title="Aşağı">▼</span>
+                <span class="note-delete-btn" data-nid="${n.id}" data-fid="${folder.id}" title="Sil">✕</span>
+            </span>
         </div>`;
     });
     h += `<div class="add-note-btn" data-fid="${folder.id}"><span>+</span> Yeni Not Ekle</div></div></div>`;
@@ -1131,7 +1170,7 @@ function folderHTML(folder, q) {
 function attachEvents() {
     document.querySelectorAll('.folder-header').forEach(el => {
         el.onclick = e => {
-            if (e.target.classList.contains('folder-star') || e.target.classList.contains('folder-menu-btn')) return;
+            if (e.target.classList.contains('folder-star') || e.target.classList.contains('folder-menu-btn') || e.target.classList.contains('folder-move-btn')) return;
             const id = el.dataset.fid;
             appData.expandedFolders[id] = !appData.expandedFolders[id];
             appData.activeFolderId = id;
@@ -1148,9 +1187,19 @@ function attachEvents() {
         el.onclick = e => { e.stopPropagation(); folderCtx(e, el.dataset.fid); };
     });
 
+    // Folder move buttons
+    document.querySelectorAll('.folder-move-btn').forEach(el => {
+        el.onclick = e => { e.stopPropagation(); moveFolderDir(el.dataset.fid, el.dataset.dir); };
+    });
+
     document.querySelectorAll('.note-item').forEach(el => {
-        el.onclick = e => { if (e.target.classList.contains('note-delete-btn')) return; openNote(el.dataset.nid); };
+        el.onclick = e => { if (e.target.closest('.note-actions')) return; openNote(el.dataset.nid); };
         el.oncontextmenu = e => { e.preventDefault(); noteCtx(e, el.dataset.nid, el.dataset.fid); };
+    });
+
+    // Note move buttons
+    document.querySelectorAll('.move-btn').forEach(el => {
+        el.onclick = e => { e.stopPropagation(); moveNoteDir(el.dataset.nid, el.dataset.fid, el.dataset.dir); };
     });
 
     document.querySelectorAll('.note-delete-btn').forEach(el => {
@@ -1164,8 +1213,12 @@ function attachEvents() {
 
 function folderCtx(e, fid) {
     const f = getFolder(fid); if (!f) return;
+    const idx = appData.folders.indexOf(f);
     showCtx(e, [
         { icon: '📝', label: 'Yeni Not', action: () => createNote(fid) },
+        { divider: true },
+        { icon: '▲', label: 'Yukarı Taşı', action: () => moveFolderDir(fid, 'up') },
+        { icon: '▼', label: 'Aşağı Taşı', action: () => moveFolderDir(fid, 'down') },
         { divider: true },
         { icon: '✏️', label: 'Adını Değiştir', action: () => renameFolder(fid) },
         { icon: f.starred ? '☆' : '⭐', label: f.starred ? 'Sabitlemeyi Kaldır' : 'Sabitle', action: () => { f.starred = !f.starred; saveData(); renderFolders(); } },
@@ -1179,6 +1232,9 @@ function noteCtx(e, nid, fid) {
     const items = [
         { icon: '📝', label: 'Düzenle', action: () => openNote(nid) },
         { icon: '📋', label: 'Kopyala', action: () => duplicateNote(nid, fid) },
+        { divider: true },
+        { icon: '▲', label: 'Yukarı Taşı', action: () => moveNoteDir(nid, fid, 'up') },
+        { icon: '▼', label: 'Aşağı Taşı', action: () => moveNoteDir(nid, fid, 'down') },
     ];
     if (others.length) {
         items.push({ divider: true });
@@ -1187,6 +1243,30 @@ function noteCtx(e, nid, fid) {
     items.push({ divider: true });
     items.push({ icon: '🗑', label: 'Sil', danger: true, action: () => deleteNote(nid, fid) });
     showCtx(e, items);
+}
+
+// ===== MOVE UP/DOWN =====
+function moveNoteDir(nid, fid, dir) {
+    const f = getFolder(fid); if (!f) return;
+    const idx = f.notes.findIndex(n => n.id === nid);
+    if (idx === -1) return;
+    if (dir === 'up' && idx > 0) {
+        [f.notes[idx - 1], f.notes[idx]] = [f.notes[idx], f.notes[idx - 1]];
+    } else if (dir === 'down' && idx < f.notes.length - 1) {
+        [f.notes[idx], f.notes[idx + 1]] = [f.notes[idx + 1], f.notes[idx]];
+    } else return;
+    saveData(); renderFolders();
+}
+
+function moveFolderDir(fid, dir) {
+    const idx = appData.folders.findIndex(f => f.id === fid);
+    if (idx === -1) return;
+    if (dir === 'up' && idx > 0) {
+        [appData.folders[idx - 1], appData.folders[idx]] = [appData.folders[idx], appData.folders[idx - 1]];
+    } else if (dir === 'down' && idx < appData.folders.length - 1) {
+        [appData.folders[idx], appData.folders[idx + 1]] = [appData.folders[idx + 1], appData.folders[idx]];
+    } else return;
+    saveData(); renderFolders();
 }
 
 // ===== OPERATIONS =====
